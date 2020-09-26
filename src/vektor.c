@@ -9,10 +9,11 @@ void vector_init(vektor *v) {
 	v->atmeretez = vectorResize;
 	v->torol = vectorDelete;
 	v->kiir = printVektor;
-v->min_pos = vektorGetMinPos;
-v->max_pos = vektorGetMaxPos;
-v->rendez = vektorSort;
-
+	v->min_pos = vektorGetMinPos;
+	v->max_pos = vektorGetMaxPos;
+	v->rendez = vektorSort;
+	v->atlag = vektorAverage;
+	v->szoras = vektorSzoras;
 
 	v->lista.kapacitas = VEKTOR_ALAP_KAPACITAS;
 	v->lista.elemszam = 0;
@@ -116,7 +117,7 @@ void printVektor(vektor *v) {
 	printf("\n");
 }
 
-int vektorGetMinPos(vektor *v) {
+int vektorGetMaxPos(vektor *v) {
 	double max = v->ertek(v, 0);
 	size_t i_max = 0;
 	if (v) {
@@ -130,5 +131,45 @@ int vektorGetMinPos(vektor *v) {
 	return i_max;
 }
 
-int vektorGetMaxPos(vektor *);
-void vektorSort(vektor *);
+int vektorGetMinPos(vektor *v) {
+	double min = v->ertek(v, 0);
+	size_t i_min = 0;
+	if (v) {
+		for ( size_t i=1; i < v->lista.elemszam; i++) {
+			if (v->ertek(v, i) < min) {
+				min = v->ertek(v, i);
+				i_min = i;
+			}
+		}
+	}
+	return i_min;
+}
+
+void vektorSort(vektor *v){
+	double tmp = 0;
+	if (v) {
+		for (size_t i=0; i < v->elemszam(v)-1;i++)
+			for (size_t j=i+1; j < v->elemszam(v); j++)
+				if ( v->ertek(v, i) > v->ertek(v, j)) {
+					tmp = v->ertek(v, i);
+					v->beallit(v, i, v->ertek(v, j));
+					v->beallit(v, j, tmp);
+				}
+	}
+}
+
+double vektorAverage(vektor *v) {
+	double cumsum = 0;
+	if(v) {
+		for (size_t i = 0; i < v->elemszam(v); i++)
+			cumsum += v->ertek(v, i);
+	}
+	return cumsum/v->elemszam(v);
+}
+
+double vektorSzoras(vektor *v) {
+	double cumsumsum= 0;
+	for (size_t i = 0; i < v->elemszam(v); i++)
+		cumsumsum += pow(v->ertek(v, i), 2);
+	return sqrt(cumsumsum / v->elemszam(v));
+}

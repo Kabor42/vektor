@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #define VECTOR_INIT(vec) vektor vec;\
 	vector_init(&vec)
@@ -31,6 +32,8 @@ struct sVector {
 	int (*min_pos) (vektor *);
 	int (*max_pos) (vektor *);
 	void (*rendez) (vektor *);
+	double (*atlag) (vektor *);
+	double (*szoras) (vektor *);
 };
 
 void vector_init(vektor *);
@@ -45,5 +48,7 @@ void printVektor(vektor *);
 int vektorGetMinPos(vektor *);
 int vektorGetMaxPos(vektor *);
 void vektorSort(vektor *);
+double vektorAverage(vektor *);
+double vektorSzoras(vektor *);
 
 #endif

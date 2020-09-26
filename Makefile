@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-c -Wall -Werror -pedantic -std=gnu99 -O2
-LDFLAGS=
+LDFLAGS= -lm
 EXECUTABLE_NAME=vektor
 
 # Folders
@@ -31,3 +31,6 @@ $(OBJECT_FILES): $(OBJ)/%.o: $(SRC)/%.c
 	@echo Compiling $<
 	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) -o $@ $<
+
+run: $(EXECUTABLE_FILES)
+	./$(EXECUTABLE_FILES)
