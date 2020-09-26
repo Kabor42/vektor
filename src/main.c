@@ -2,7 +2,8 @@
 #include "vektor.h"
 
 int main(int argc, char* argv[]) {
-  VEKTOR_START(v);
+  vektor v;
+  vektor_start(&v);
 
   v.hozzaad(&v, 2.34);
 
