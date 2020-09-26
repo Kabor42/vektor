@@ -10,11 +10,11 @@ OBJ=$(BIN)/obj
 
 # Files
 SOURCE_FILES=\
-	     main.c \
-	     vektor.c
+	     vektor.c \
+	     main.c
 
 EXECUTABLE_FILES = $(EXECUTABLE_NAME:%=$(BIN)/%)
-OBJECT_FILES     = $(SOURCE_FILES:%.cpp=$(OBJ)/%.o)
+OBJECT_FILES     = $(SOURCE_FILES:%.c=$(OBJ)/%.o)
 
 build: $(EXECUTABLE_FILES)
 
@@ -27,7 +27,7 @@ $(EXECUTABLE_FILES): $(OBJECT_FILES)
 	@$(CC) $(LDFLAGS) -o $@ $^
 	@echo "Build successful!"
 
-$(OBJECT_FILES): $(OBJ)/%.o: %.cpp
+$(OBJECT_FILES): $(OBJ)/%.o: $(SRC)/%.c
 	@echo Compiling $<
 	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) -o $@ $<
