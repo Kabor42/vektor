@@ -1,30 +1,49 @@
-#ifndef _H_VEKTOR_M_
-#define _H_VEKTOR_M_
+#ifndef __M_VEKTOR_H__
+#define __M_VEKTOR_H__
 
 #include <stdio.h>
 #include <stdlib.h>
 
+#define VECTOR_INIT(vec) vektor vec;\
+	vector_init(&vec)
 #define VEKTOR_ALAP_KAPACITAS 100
 #define UNDEFINED -1
 #define SUCCESS 0
-#define VEKTOR_START(vek) vektor vec;\
-  vektor_start(&vek)
 
-typedef struct _s_VektorLista {
-  double *elemek;
-  size_t kapacitas;
-  size_t elemszam;
-}vektorLista ;
+typedef struct sVektorLista {
+	double *elemek;
+	int kapacitas;
+	int elemszam;
+} sVektorLista;
 
-typedef struct _s_Vektor vektor;
-struct _s_Vektor {
-  vektorLista lista;
-
-  int (*hozzaad) (vektor *, double elem);
+typedef struct sVector vektor;
+struct sVector {
+	sVektorLista lista;
+	// Függvény pointerek
+	int (*elemszam)(vektor *);
+	int (*atmeretez)(vektor *, int);
+	int (*vegere_tesz)(vektor *, double);
+	int (*beallit)(vektor *, int, double);
+	double (*ertek)(vektor *, int);
+	int (*torol)(vektor *, int);
+	int (*felszabadit)(vektor *);
+	void (*kiir) (vektor *);
+	int (*min_pos) (vektor *);
+	int (*max_pos) (vektor *);
+	void (*rendez) (vektor *);
 };
 
-int _f_vektorHozzaad( vektor *, double);
-int _f_vektorAtmeretez(vektor *, size_t);
-void vektor_start(vektor *);
+void vector_init(vektor *);
+int vectorResize(vektor *, int);
+int vectorPushBack(vektor *, double);
+int vectorSet(vektor *, int, double);
+double vectorGet(vektor *, int);
+int vectorDelete(vektor *, int);
+int vectorFree(vektor *);
+int vectorTotal(vektor *);
+void printVektor(vektor *);
+int vektorGetMinPos(vektor *);
+int vektorGetMaxPos(vektor *);
+void vektorSort(vektor *);
 
 #endif

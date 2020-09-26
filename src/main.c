@@ -1,11 +1,30 @@
 #include <stdio.h>
+#include <stdlib.h>
+
 #include "vektor.h"
 
+
 int main(int argc, char* argv[]) {
-  vektor v;
-  vektor_start(&v);
+	printf("Hello world!\n");
 
-  v.hozzaad(&v, 2.34);
+	VECTOR_INIT(v);
 
-  return 0;
+	v.vegere_tesz(&v, 1);    
+	v.vegere_tesz(&v, 2);    
+	v.vegere_tesz(&v, 3);    
+	v.vegere_tesz(&v, 4);    
+	v.vegere_tesz(&v, 5);    
+
+	v.kiir(&v);
+
+	v.beallit(&v, 2, 8);
+
+	v.kiir(&v);
+
+	v.torol(&v, 3);
+
+	v.kiir(&v);
+
+	v.felszabadit(&v);
+	return 0;
 }
