@@ -3,6 +3,10 @@
 
 #include "vektor.h"
 
+int _f_cmp(const void *a, const void *b) {
+	double tmp = ( *(double*)a - *(double*)b );
+	return (tmp > 0) ? 1 : (tmp < 0 ) ? -1 : 0;
+}
 
 int main(int argc, char* argv[]) {
 	printf("Hello world!\n");
@@ -53,8 +57,21 @@ int main(int argc, char* argv[]) {
 		printf("%ld darab osszehasonlitas tortent.\n", v.osszehas_szam);
 	}
 
+	char ansver;
+	printf("QuickSort(q) vagy BubbleSort(b)?\n");
+	do {
+	printf("(q/b): ");
+	scanf(" %c", &ansver);
+	printf("Wrong ansver '%c'\n", ansver);
+	} while (ansver != 'q' && ansver != 'b');
+
 	printf("Rendezes...\n");
-	v.rendez(&v);
+	if (ansver == 'b') v.rendez(&v);
+	if (ansver == 'q') {
+		qsort(v.lista.elemek, v.lista.elemszam, sizeof(double), _f_cmp);
+		v.sorted = 1;
+		v.osszehas_szam = 0;
+	}
 	printf("%ld darab osszehasonlitas tortent.\n", v.osszehas_szam);
 
 	keresett_index = v.keres(&v, toFind);
