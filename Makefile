@@ -33,4 +33,4 @@ $(OBJECT_FILES): $(OBJ)/%.o: $(SRC)/%.c
 	@$(CC) $(CFLAGS) -o $@ $<
 
 run: $(EXECUTABLE_FILES)
-	./$(EXECUTABLE_FILES)
+	./run.sh
