@@ -23,6 +23,7 @@ struct sVector {
 	int sorted;
 	int error;
 	char* error_msg;
+	size_t osszehas_szam;
 	// Függvény pointerek
 	int (*elemszam)(vektor *);
 	int (*atmeretez)(vektor *, int);
@@ -37,7 +38,7 @@ struct sVector {
 	void (*rendez) (vektor *);
 	double (*atlag) (vektor *);
 	double (*szoras) (vektor *);
-	size_t (*keres) (vektor *);
+	size_t (*keres) (vektor *, double);
 };
 
 void vector_init(vektor *);
@@ -55,7 +56,7 @@ void vektorSort(vektor *);
 double vektorAverage(vektor *);
 double vektorSzoras(vektor *);
 size_t vektorFindUnsorted(vektor *, double);
-size_t vektorFindSorted(vektor *, double);
+size_t vektorFindSorted(vektor *, size_t, size_t, double);
 size_t vektorFind(vektor *, double);
 
 

@@ -1,5 +1,7 @@
 #include "vektor.h"
 
+
+
 void vector_init(vektor *v) {
 	v->vegere_tesz = vectorPushBack;
 	v->beallit = vectorSet;
@@ -22,6 +24,8 @@ void vector_init(vektor *v) {
 	v->sorted = 0;
 	v->error = 0;
 	v->error_msg = NULL;
+
+	v->osszehas_szam = 0;
 }
 
 int vectorTotal(vektor *v) {
@@ -58,6 +62,7 @@ int vectorPushBack(vektor *v, double item) {
 			status = SUCCESS;
 		}
 	}
+	v->sorted = 0;
 	return status;
 }
 
@@ -69,6 +74,7 @@ int vectorSet(vektor *v, int index, double item) {
 			status = SUCCESS;
 		}
 	}
+	v->sorted = 0;
 	return status;
 }
 
@@ -150,16 +156,23 @@ int vektorGetMinPos(vektor *v) {
 }
 
 void vektorSort(vektor *v){
+	v->osszehas_szam = 0;
 	double tmp = 0;
 	if (v) {
-		for (size_t i=0; i < v->elemszam(v)-1;i++)
+		for (size_t i=0; i < v->elemszam(v)-1;i++) {
+			fprintf(stdout, "\r%6ld / %6d", i, v->lista.elemszam);
+			fflush(stdout);
 			for (size_t j=i+1; j < v->elemszam(v); j++)
 				if ( v->ertek(v, i) > v->ertek(v, j)) {
+					v->osszehas_szam++;
 					tmp = v->ertek(v, i);
 					v->beallit(v, i, v->ertek(v, j));
 					v->beallit(v, j, tmp);
 				}
+		}
 	}
+	printf("\n");
+	v->sorted = 1;
 }
 
 double vektorAverage(vektor *v) {
@@ -180,16 +193,37 @@ double vektorSzoras(vektor *v) {
 
 
 size_t vektorFindUnsorted(vektor *v, double elem) {
-	for(size_t i=0; i<v->elemszam(v); i++)
-		if(elem - v->ertek(v, i) <= 1e9)
+	for(size_t i=0; i<v->elemszam(v); i++) {
+		v->osszehas_szam++;
+		if(fabs(elem - v->ertek(v, i)) <= 1e-9) 
 			return i;
+	}
+	v->error = 1;
+	v->error_msg = "A keresett elem nem talalhato!.";
 	return 0;
 }
-size_t vektorFindSorted(vektor *v, double elem){
+size_t vektorFindSorted(vektor *v, size_t b, size_t j, double elem){
+	if(j>=b) {
+		v->osszehas_szam++;
+		size_t koz = b + (j-b)/2;
+		if (v->lista.elemek[koz] == elem){
+			v->osszehas_szam++;
+			return koz;
+		}
+		if(v->lista.elemek[koz] > elem) {
+			v->osszehas_szam++;
+			return vektorFindSorted(v, b, koz-1, elem);
+		}
+		return vektorFindSorted(v, koz+1, j, elem);
+	}
+	v->error = 1;
+	v->error_msg = "A függvény még nincs implementálva!";
 	return 0;
 }
 size_t vektorFind(vektor *v, double elem) {
-	if(v->isSorted)
-		return vektorFindSorted(v, elem);
+	v->osszehas_szam = 0;
+	v->error = 0;
+	if(v->sorted)
+		return vektorFindSorted(v, 0, v->lista.elemszam, elem);
 	return vektorFindUnsorted(v, elem);
 }

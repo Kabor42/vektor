@@ -44,6 +44,28 @@ int main(int argc, char* argv[]) {
 
 	printf("Elemszam: %10d\n", v.elemszam(&v));
 
+	size_t keresett_index = v.keres(&v, toFind);
+	if (v.error) {
+		printf("HIBA: %s\n", v.error_msg);
+		v.error = 0;
+	} else {
+		printf("A keresett elem a %ld helyen van.\n", keresett_index);
+		printf("%ld darab osszehasonlitas tortent.\n", v.osszehas_szam);
+	}
+
+	printf("Rendezes...\n");
+	v.rendez(&v);
+	printf("%ld darab osszehasonlitas tortent.\n", v.osszehas_szam);
+
+	keresett_index = v.keres(&v, toFind);
+	if (v.error) {
+		printf("HIBA: %s\n", v.error_msg);
+		v.error = 0;
+	} else {
+		printf("A keresett elem a %ld helyen van.\n", keresett_index);
+		printf("%ld darab osszehasonlitas tortent.\n", v.osszehas_szam);
+	}
+
 	// v.vegere_tesz(&v, 1);    
 	// v.vegere_tesz(&v, 2);    
 	// v.vegere_tesz(&v, 3);    
