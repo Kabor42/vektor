@@ -20,6 +20,9 @@ typedef struct sVektorLista {
 typedef struct sVector vektor;
 struct sVector {
 	sVektorLista lista;
+	int sorted;
+	int error;
+	char* error_msg;
 	// Függvény pointerek
 	int (*elemszam)(vektor *);
 	int (*atmeretez)(vektor *, int);
@@ -34,6 +37,7 @@ struct sVector {
 	void (*rendez) (vektor *);
 	double (*atlag) (vektor *);
 	double (*szoras) (vektor *);
+	size_t (*keres) (vektor *);
 };
 
 void vector_init(vektor *);
@@ -50,5 +54,9 @@ int vektorGetMaxPos(vektor *);
 void vektorSort(vektor *);
 double vektorAverage(vektor *);
 double vektorSzoras(vektor *);
+size_t vektorFindUnsorted(vektor *, double);
+size_t vektorFindSorted(vektor *, double);
+size_t vektorFind(vektor *, double);
+
 
 #endif

@@ -14,10 +14,14 @@ void vector_init(vektor *v) {
 	v->rendez = vektorSort;
 	v->atlag = vektorAverage;
 	v->szoras = vektorSzoras;
+	v->keres = vektorFind;
 
 	v->lista.kapacitas = VEKTOR_ALAP_KAPACITAS;
 	v->lista.elemszam = 0;
 	v->lista.elemek = malloc(sizeof(double) * v->lista.kapacitas);
+	v->sorted = 0;
+	v->error = 0;
+	v->error_msg = NULL;
 }
 
 int vectorTotal(vektor *v) {
@@ -172,4 +176,20 @@ double vektorSzoras(vektor *v) {
 	for (size_t i = 0; i < v->elemszam(v); i++)
 		cumsumsum += pow(v->ertek(v, i), 2);
 	return sqrt(cumsumsum / v->elemszam(v));
+}
+
+
+size_t vektorFindUnsorted(vektor *v, double elem) {
+	for(size_t i=0; i<v->elemszam(v); i++)
+		if(elem - v->ertek(v, i) <= 1e9)
+			return i;
+	return 0;
+}
+size_t vektorFindSorted(vektor *v, double elem){
+	return 0;
+}
+size_t vektorFind(vektor *v, double elem) {
+	if(v->isSorted)
+		return vektorFindSorted(v, elem);
+	return vektorFindUnsorted(v, elem);
 }
