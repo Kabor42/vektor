@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "vektor.h"
 
@@ -10,6 +11,8 @@ int _f_cmp(const void *a, const void *b) {
 
 int main(int argc, char* argv[]) {
 	printf("Hello world!\n");
+
+	clock_t t;
 
 	for(size_t i=0;i<argc;i++)
 		printf("%3ld\t%s\n",i,argv[i]);
@@ -48,13 +51,16 @@ int main(int argc, char* argv[]) {
 
 	printf("Elemszam: %10d\n", v.elemszam(&v));
 
+	t = clock();
 	size_t keresett_index = v.keres(&v, toFind);
+	t = clock() - t;
 	if (v.error) {
 		printf("HIBA: %s\n", v.error_msg);
 		v.error = 0;
 	} else {
 		printf("A keresett elem a %ld helyen van.\n", keresett_index);
 		printf("%ld darab osszehasonlitas tortent.\n", v.osszehas_szam);
+		printf("%lf masodpercet vett igenybe.\n", ((double)t) / CLOCKS_PER_SEC);
 	}
 
 	char ansver;
@@ -65,6 +71,7 @@ int main(int argc, char* argv[]) {
 		feof = scanf(" %c", &ansver);
 	} while (ansver != 'q' && ansver != 'b' && feof != EOF);
 
+	t = clock();
 	printf("Rendezes...\n");
 	if (ansver == 'b') v.rendez(&v);
 	if (ansver == 'q') {
@@ -73,14 +80,19 @@ int main(int argc, char* argv[]) {
 		v.osszehas_szam = 0;
 	}
 	printf("%ld darab osszehasonlitas tortent.\n", v.osszehas_szam);
+	t = clock() - t;
+	printf("%lf masodpercet vett igenybe.\n", ((double)t) / CLOCKS_PER_SEC);
 
+	t = clock();
 	keresett_index = v.keres(&v, toFind);
+	t = clock() - t;
 	if (v.error) {
 		printf("HIBA: %s\n", v.error_msg);
 		v.error = 0;
 	} else {
 		printf("A keresett elem a %ld helyen van.\n", keresett_index);
 		printf("%ld darab osszehasonlitas tortent.\n", v.osszehas_szam);
+		printf("%lf masodpercet vett igenybe.\n", ((double)t) / CLOCKS_PER_SEC);
 	}
 
 	// v.vegere_tesz(&v, 1);    

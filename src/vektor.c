@@ -18,6 +18,13 @@ size_t vektorFindSorted(vektor *, size_t, size_t, double);
 size_t vektorFind(vektor *, double);
 
 
+/** Inicializalja a vektor strukturat.
+ * @param v vektor amit inicializalni kell.
+ *
+ * Beallitja a helyes kezdoertekeket.
+ * Lefoglalaja az alap mamoria teruletet.
+ * Beallitja a helyes fuggvenypointereket.
+ */
 void vector_init(vektor *v) {
 	v->vegere_tesz = vectorPushBack;
 	v->beallit = vectorSet;
@@ -44,6 +51,13 @@ void vector_init(vektor *v) {
 	v->osszehas_szam = 0;
 }
 
+/**
+ * @brief Vektor elemszama segedfuggveny.
+ *
+ * @param v vektor.
+ *
+ * @return vektor elemszam.
+ */
 int vectorTotal(vektor *v) {
 	int totalCount = UNDEFINED;
 	if (v) {
@@ -52,6 +66,14 @@ int vectorTotal(vektor *v) {
 	return totalCount;
 }
 
+/**
+ * @brief Vektor atmeretezes seged.
+ *
+ * @param v vektor.
+ * @param capacity uj meret.
+ *
+ * @return statusz, sikeres, vagy sem.
+ */
 int vectorResize(vektor *v, int capacity) {
 	int status = UNDEFINED;
 	if(v) {
@@ -65,6 +87,14 @@ int vectorResize(vektor *v, int capacity) {
 	return status;
 }
 
+/**
+ * @brief Vektor elem betesz seged.
+ *
+ * @param v vektor;
+ * @param item elem amit behelyez.
+ *
+ * @return sikeres-e a behelyezes.
+ */
 int vectorPushBack(vektor *v, double item) {
 	int status = UNDEFINED;
 	if (v) {
