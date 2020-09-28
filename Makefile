@@ -24,7 +24,7 @@ clean:
 .PHONY: build clean
 
 $(EXECUTABLE_FILES): $(OBJECT_FILES)
-	@$(CC) $(LDFLAGS) -o $@ $^
+	@$(CC) -o $@ $^ $(LDFLAGS)
 	@echo "Build successful!"
 
 $(OBJECT_FILES): $(OBJ)/%.o: $(SRC)/%.c
