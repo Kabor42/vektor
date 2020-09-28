@@ -58,12 +58,12 @@ int main(int argc, char* argv[]) {
 	}
 
 	char ansver;
+	int feof = 0;
 	printf("QuickSort(q) vagy BubbleSort(b)?\n");
 	do {
-	printf("(q/b): ");
-	scanf(" %c", &ansver);
-	printf("Wrong ansver '%c'\n", ansver);
-	} while (ansver != 'q' && ansver != 'b');
+		printf("(q/b): ");
+		feof = scanf(" %c", &ansver);
+	} while (ansver != 'q' && ansver != 'b' && feof != EOF);
 
 	printf("Rendezes...\n");
 	if (ansver == 'b') v.rendez(&v);

@@ -42,22 +42,6 @@ struct sVector {
 };
 
 void vector_init(vektor *);
-int vectorResize(vektor *, int);
-int vectorPushBack(vektor *, double);
-int vectorSet(vektor *, int, double);
-double vectorGet(vektor *, int);
-int vectorDelete(vektor *, int);
-int vectorFree(vektor *);
-int vectorTotal(vektor *);
-void printVektor(vektor *);
-int vektorGetMinPos(vektor *);
-int vektorGetMaxPos(vektor *);
-void vektorSort(vektor *);
-double vektorAverage(vektor *);
-double vektorSzoras(vektor *);
-size_t vektorFindUnsorted(vektor *, double);
-size_t vektorFindSorted(vektor *, size_t, size_t, double);
-size_t vektorFind(vektor *, double);
 
 
 #endif
