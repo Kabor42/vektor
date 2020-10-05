@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-c -Wall -Werror -pedantic -std=gnu99 -O2
+CFLAGS=-c -Wall -Werror -pedantic -std=gnu99 -g -ggdb
 LDFLAGS= -lm
 EXECUTABLE_NAME=vektor
 
