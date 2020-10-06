@@ -16,30 +16,13 @@ size_t minimum_index(double *t);
 double minimum_fgv(double *t);
 size_t keres(double *t, double elem);
 
-void lefoglal(double *tomb, size_t uj_meret) {
-  double *uj_tomb = (double *)realloc(tomb, sizeof(double)*uj_meret);
-  if (uj_tomb) {
-    tomb = uj_tomb;
-    lefoglalt = uj_meret;
-  } else {
-    HIBA = 1;
-    hibakod = "AJJAJ!, valamiert nem sikerult memoriat foglalni.";
-  }
-}
-
-void betesz(double *tomb, double elem) {
-  if (elemszam == lefoglalt)
-    lefoglal(tomb, lefoglalt + 100);
-  tomb[elemszam] = elem;
-  elemszam += 1;
-}
-
 void beolvas(char *fajl, double *t) {
   FILE *fp = fopen(fajl, "r");
-  char line[100];
-  while (fgets(line, sizeof(line), fp) != NULL) {
-    printf("%6zu  %s",elemszam, line);
-    betesz(t, atof(line));
+  if (fp == NULL)
+    return;
+  char line[30];
+  while (fgets(line, sizeof line, fp) != NULL) {
+    t[elemszam++]=atof(line);
   }
   fclose(fp);
 }
@@ -61,15 +44,21 @@ int main(int argc, char *argv[]) {
       keresett_szam);
   // Mivel itt mar tudom, hogy minden valtozo megvan,
   // lefoglalom a tomb helyet a memoriaban.
-  // Alapesetben 100 elemet, ha tobb kell majd foglalok meg.
-  tomb = (double *)malloc(sizeof(double) * 100);
+  lefoglalt = vektro_merete;
+  tomb = (double *)malloc(sizeof(double) * lefoglalt);
 
   beolvas( fajlnev, tomb);
 
 
   double ossz = osszeg(tomb);
   if(!HIBA)
-    printf("Osszeg: %3.2lf\n", ossz);
+    printf("Osszeg: %3.6lf\n", ossz);
+  double atl = atlag_fgv(tomb);
+  if(!HIBA)
+    printf("Atlag: %3.6lf\n", atl);
+  double mini = minimum_fgv(tomb);
+  if(!HIBA)
+    printf("Min: %3.6lf\n", mini);
   return 0;
 }
 
