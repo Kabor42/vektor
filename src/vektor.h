@@ -52,6 +52,7 @@ struct sVector {
   int (*min_pos)(vektor *);       ///< A legkisebb elem helyet adja vissza.
   int (*max_pos)(vektor *);       ///< A legnagyobb elem helyet adja vissza.
   void (*rendez)(vektor *);       ///< Sorba rendez.
+  void (*qrendez)(vektor *);      ///< Sorba rendez.
   double (*atlag)(vektor *);      ///< Atlagolas.
   double (*szoras)(vektor *);     ///< Vektor elemeinek szorasa.
   size_t (*keres)(vektor *, double); ///< Elemet keres a vektorban.

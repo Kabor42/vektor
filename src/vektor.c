@@ -11,11 +11,15 @@ void printVektor(vektor *);
 int vektorGetMinPos(vektor *);
 int vektorGetMaxPos(vektor *);
 void vektorSort(vektor *);
+void vektorQsort(vektor *);
 double vektorAverage(vektor *);
 double vektorSzoras(vektor *);
 size_t vektorFindUnsorted(vektor *, double);
 size_t vektorFindSorted(vektor *, size_t, size_t, double);
 size_t vektorFind(vektor *, double);
+void _f_qsort(double *, double *);
+void _f_part(double *, double *, double **, double **, double **, double **);
+void _f_insrt(double *, double *);
 
 /** Inicializalja a vektor strukturat.
  * @param v vektor amit inicializalni kell.
@@ -36,6 +40,7 @@ void vector_init(vektor *v) {
   v->min_pos = vektorGetMinPos;
   v->max_pos = vektorGetMaxPos;
   v->rendez = vektorSort;
+  v->qrendez = vektorQsort;
   v->atlag = vektorAverage;
   v->szoras = vektorSzoras;
   v->keres = vektorFind;
@@ -270,4 +275,60 @@ size_t vektorFind(vektor *v, double elem) {
   if (v->sorted)
     return vektorFindSorted(v, 0, v->lista.elemszam, elem);
   return vektorFindUnsorted(v, elem);
+}
+
+#define swap(a,b) { double h=a; a=b; b=h; }
+#define min(a,b) ((a)<(b) ? (a) : (b))
+#define sort3(a,b,c) if(b<a) { if(c<a) { if(c<b) { swap(a,c);} else {double h=a; a =b; b=c; c=h;}} else {swap(a,b);}}else{if(c<b){if(c<a){double h=c;c=b;b=a;a=h;} else {swap(b,c);}}}
+void _f_part(double *left0, double *right0, double **l1, double **r1, double **l2, double **r2) {
+  double *left = left0 + 1;
+  double *right = right0;
+
+  double *mid = left0 + (right0 - left0) / 2;
+  double piv = *mid;
+  sort3(*left0, piv, *right0);
+  *left = piv;
+
+  while(1) {
+    do left += 1; while(*left < piv);
+    do right -= 1; while(*right > piv);
+    if (left >= right) break;
+    swap(*left, *right);
+  }
+  *(left0 + 1) = *right;
+  *right = piv;
+  if(right < mid) {
+    *l1 = left0; *r1 = right -1;
+    *l2 = right + 1; *r2 = right0;
+  } else {
+    *l1 = right + 1; *r1 = right0;
+    *l2 = left0; *r2 = right -1;
+  }
+}
+void _f_insrt(double *left, double *right) {
+  for(double *pi = left+1; pi <= right; pi++)
+    if(*pi < *left)
+      swap(*pi, *left);
+  for(double *pi = left+2; pi <= right; pi++) {
+    double h = *pi;
+    double *pj = pi - 1;
+    while(h < *pj) {
+      *(pj + 1) = *pj;
+      pj -= 1;
+    }
+    *(pj + 1) = h;
+  }
+}
+void _f_qsort(double *left, double *right) {
+  double *l, *r;
+  while(right - left >= 50) {
+    _f_part(left, right, &l, &r, &left, &right);
+    _f_qsort(l, r);
+  }
+  _f_insrt(left, right);
+}
+void vektorQsort(vektor *v) {
+  v->osszehas_szam = 0;
+  _f_qsort(v->lista.elemek, v->lista.elemek + v->lista.elemszam - 1);
+  v->sorted = 1;
 }

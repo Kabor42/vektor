@@ -10,12 +10,8 @@ int _f_cmp(const void *a, const void *b) {
 }
 
 int main(int argc, char *argv[]) {
-  printf("Hello world!\n");
 
   clock_t t;
-
-  for (size_t i = 0; i < argc; i++)
-    printf("%3ld\t%s\n", i, argv[i]);
 
   if (argc < 4) {
     printf("Not enoug arguments\n");
@@ -66,9 +62,9 @@ int main(int argc, char *argv[]) {
   int feof = 0;
   printf("QuickSort(q) vagy BubbleSort(b)?\n");
   do {
-    printf("(q/b): ");
+    printf("(q/b/s): ");
     feof = scanf(" %c", &ansver);
-  } while (ansver != 'q' && ansver != 'b' && feof != EOF);
+  } while (ansver != 'q' && ansver != 's' && ansver != 'b' && feof != EOF);
 
   t = clock();
   printf("Rendezes...\n");
@@ -79,6 +75,8 @@ int main(int argc, char *argv[]) {
     v.sorted = 1;
     v.osszehas_szam = 0;
   }
+  if (ansver == 's')
+    v.qrendez(&v);
   printf("%ld darab osszehasonlitas tortent.\n", v.osszehas_szam);
   t = clock() - t;
   printf("%lf masodpercet vett igenybe.\n", ((double)t) / CLOCKS_PER_SEC);
@@ -94,6 +92,26 @@ int main(int argc, char *argv[]) {
     printf("%ld darab osszehasonlitas tortent.\n", v.osszehas_szam);
     printf("%lf masodpercet vett igenybe.\n", ((double)t) / CLOCKS_PER_SEC);
   }
+
+  printf("Elso: %10.5lf\nUtolso: %10.5lf\n", v.ertek(&v, 0), v.ertek(&v, v.elemszam(&v) - 1));
+
+  printf("[ TEST ][ IS_SORTED ]");
+  for(size_t i=0; i < v.elemszam(&v); i++)
+    if(v.ertek(&v, i-1) > v.ertek(&v, i))
+      printf("[ NOT SORTED ]");
+  printf("\n");
+
+  printf("  HEAD \n");
+  for(size_t i = 0; i < 20; i++) {
+    printf("%14.5lf", v.ertek(&v, i));
+    if(i%2!=0)printf("\n");
+  }
+  printf("\n  TAIL \n");
+  for(size_t i = v.elemszam(&v)-20; i < v.elemszam(&v); i++) {
+    printf("%14.5lf", v.ertek(&v, i));
+    if(i%2!=0)printf("\n");
+  }
+  printf("\n");
 
   // v.vegere_tesz(&v, 1);
   // v.vegere_tesz(&v, 2);
