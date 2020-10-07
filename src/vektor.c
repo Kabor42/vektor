@@ -277,10 +277,41 @@ size_t vektorFind(vektor *v, double elem) {
   return vektorFindUnsorted(v, elem);
 }
 
-#define swap(a,b) { double h=a; a=b; b=h; }
-#define min(a,b) ((a)<(b) ? (a) : (b))
-#define sort3(a,b,c) if(b<a) { if(c<a) { if(c<b) { swap(a,c);} else {double h=a; a =b; b=c; c=h;}} else {swap(a,b);}}else{if(c<b){if(c<a){double h=c;c=b;b=a;a=h;} else {swap(b,c);}}}
-void _f_part(double *left0, double *right0, double **l1, double **r1, double **l2, double **r2) {
+#define swap(a, b)                                                             \
+  {                                                                            \
+    double h = a;                                                              \
+    a = b;                                                                     \
+    b = h;                                                                     \
+  }
+#define min(a, b) ((a) < (b) ? (a) : (b))
+#define sort3(a, b, c)                                                         \
+  if (b < a) {                                                                 \
+    if (c < a) {                                                               \
+      if (c < b) {                                                             \
+        swap(a, c);                                                            \
+      } else {                                                                 \
+        double h = a;                                                          \
+        a = b;                                                                 \
+        b = c;                                                                 \
+        c = h;                                                                 \
+      }                                                                        \
+    } else {                                                                   \
+      swap(a, b);                                                              \
+    }                                                                          \
+  } else {                                                                     \
+    if (c < b) {                                                               \
+      if (c < a) {                                                             \
+        double h = c;                                                          \
+        c = b;                                                                 \
+        b = a;                                                                 \
+        a = h;                                                                 \
+      } else {                                                                 \
+        swap(b, c);                                                            \
+      }                                                                        \
+    }                                                                          \
+  }
+void _f_part(double *left0, double *right0, double **l1, double **r1,
+             double **l2, double **r2) {
   double *left = left0 + 1;
   double *right = right0;
 
@@ -289,30 +320,39 @@ void _f_part(double *left0, double *right0, double **l1, double **r1, double **l
   sort3(*left0, piv, *right0);
   *left = piv;
 
-  while(1) {
-    do left += 1; while(*left < piv);
-    do right -= 1; while(*right > piv);
-    if (left >= right) break;
+  while (1) {
+    do
+      left += 1;
+    while (*left < piv);
+    do
+      right -= 1;
+    while (*right > piv);
+    if (left >= right)
+      break;
     swap(*left, *right);
   }
   *(left0 + 1) = *right;
   *right = piv;
-  if(right < mid) {
-    *l1 = left0; *r1 = right -1;
-    *l2 = right + 1; *r2 = right0;
+  if (right < mid) {
+    *l1 = left0;
+    *r1 = right - 1;
+    *l2 = right + 1;
+    *r2 = right0;
   } else {
-    *l1 = right + 1; *r1 = right0;
-    *l2 = left0; *r2 = right -1;
+    *l1 = right + 1;
+    *r1 = right0;
+    *l2 = left0;
+    *r2 = right - 1;
   }
 }
 void _f_insrt(double *left, double *right) {
-  for(double *pi = left+1; pi <= right; pi++)
-    if(*pi < *left)
+  for (double *pi = left + 1; pi <= right; pi++)
+    if (*pi < *left)
       swap(*pi, *left);
-  for(double *pi = left+2; pi <= right; pi++) {
+  for (double *pi = left + 2; pi <= right; pi++) {
     double h = *pi;
     double *pj = pi - 1;
-    while(h < *pj) {
+    while (h < *pj) {
       *(pj + 1) = *pj;
       pj -= 1;
     }
@@ -321,7 +361,7 @@ void _f_insrt(double *left, double *right) {
 }
 void _f_qsort(double *left, double *right) {
   double *l, *r;
-  while(right - left >= 50) {
+  while (right - left >= 50) {
     _f_part(left, right, &l, &r, &left, &right);
     _f_qsort(l, r);
   }

@@ -93,23 +93,26 @@ int main(int argc, char *argv[]) {
     printf("%lf masodpercet vett igenybe.\n", ((double)t) / CLOCKS_PER_SEC);
   }
 
-  printf("Elso: %10.5lf\nUtolso: %10.5lf\n", v.ertek(&v, 0), v.ertek(&v, v.elemszam(&v) - 1));
+  printf("Elso: %10.5lf\nUtolso: %10.5lf\n", v.ertek(&v, 0),
+         v.ertek(&v, v.elemszam(&v) - 1));
 
   printf("[ TEST ][ IS_SORTED ]");
-  for(size_t i=0; i < v.elemszam(&v); i++)
-    if(v.ertek(&v, i-1) > v.ertek(&v, i))
+  for (size_t i = 0; i < v.elemszam(&v); i++)
+    if (v.ertek(&v, i - 1) > v.ertek(&v, i))
       printf("[ NOT SORTED ]");
   printf("\n");
 
   printf("  HEAD \n");
-  for(size_t i = 0; i < 20; i++) {
+  for (size_t i = 0; i < 20; i++) {
     printf("%14.5lf", v.ertek(&v, i));
-    if(i%2!=0)printf("\n");
+    if (i % 2 != 0)
+      printf("\n");
   }
   printf("\n  TAIL \n");
-  for(size_t i = v.elemszam(&v)-20; i < v.elemszam(&v); i++) {
+  for (size_t i = v.elemszam(&v) - 20; i < v.elemszam(&v); i++) {
     printf("%14.5lf", v.ertek(&v, i));
-    if(i%2!=0)printf("\n");
+    if (i % 2 != 0)
+      printf("\n");
   }
   printf("\n");
 
