@@ -30,11 +30,9 @@ int main(int argc, char *argv[])
   double toFind = (double)atof(argv[3]);
 
   // Parameterek elenorzese.
-  /*
   printf("FILENAME: %s\n", filename);
   printf("ELEMSZAM: %3ld\n", records);
   printf("KERESENDO: %lf\n", toFind);
-  */
 
   // Vektor inicializalas.
   VECTOR_INIT(v);
@@ -63,8 +61,8 @@ int main(int argc, char *argv[])
   vector_copy(&v, &b);
 
   // Keresse meg a vektor legkisebb elemét, és írja ki annak indexét és értékét is! (A)
-  printf("Min %+3.2lf %ld\n", v.ertek(&v, v.min_pos(&v)), v.min_pos(&v));
-  printf("Max %+3.2lf %ld\n", v.ertek(&v, v.max_pos(&v)), v.max_pos(&v));
+  printf("Min %+3.2lf %d\n", v.ertek(&v, v.min_pos(&v)), v.min_pos(&v));
+  printf("Max %+3.2lf %d\n", v.ertek(&v, v.max_pos(&v)), v.max_pos(&v));
 
   // Írjunk egy függvényt, ami visszaadja az adatsor átlagát és a szórását, és a program írja ki ezeket! (A)
   printf("Atlag: %+3.4e\n", v.atlag(&v));
@@ -143,7 +141,7 @@ int main(int argc, char *argv[])
   t = clock() - t;
   printf("%lf masodpercet vett igenybe.\n", ((double)t) / CLOCKS_PER_SEC);
 
-  
+
   // Befejezes.
   v.felszabadit(&v);
   a.felszabadit(&a);
