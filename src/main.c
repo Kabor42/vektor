@@ -63,12 +63,12 @@ int main(int argc, char *argv[])
 
   // Keresse meg a vektor legkisebb elemét, és írja ki annak indexét és értékét is! (A)
   printf("\n********************************************************************************\n");
-  printf("Min %+3.2lf %d\n", v.ertek(&v, v.min_pos(&v)), v.min_pos(&v));
-  printf("Max %+3.2lf %d\n", v.ertek(&v, v.max_pos(&v)), v.max_pos(&v));
+  printf("Min %+3.2lf %d-dik\n", v.ertek(&v, v.min_pos(&v)), v.min_pos(&v));
+  printf("Max %+3.2lf %d-dik\n", v.ertek(&v, v.max_pos(&v)), v.max_pos(&v));
 
   // Írjunk egy függvényt, ami visszaadja az adatsor átlagát és a szórását, és a program írja ki ezeket! (A)
   printf("\n********************************************************************************\n");
-  printf("Atlag: %+3.4e\n", v.atlag(&v));
+  printf("Atlag: %+3.4lf\n", v.atlag(&v));
   printf("Szoras: %+3.4lf\n", v.szoras(&v));
 
   // printf("Elemszam: %10d\n", v.elemszam(&v));
