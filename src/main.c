@@ -30,6 +30,7 @@ int main(int argc, char *argv[])
   double toFind = (double)atof(argv[3]);
 
   // Parameterek elenorzese.
+  printf("\n********************************************************************************\n");
   printf("FILENAME: %s\n", filename);
   printf("ELEMSZAM: %3ld\n", records);
   printf("KERESENDO: %lf\n", toFind);
@@ -61,10 +62,12 @@ int main(int argc, char *argv[])
   vector_copy(&v, &b);
 
   // Keresse meg a vektor legkisebb elemét, és írja ki annak indexét és értékét is! (A)
+  printf("\n********************************************************************************\n");
   printf("Min %+3.2lf %d\n", v.ertek(&v, v.min_pos(&v)), v.min_pos(&v));
   printf("Max %+3.2lf %d\n", v.ertek(&v, v.max_pos(&v)), v.max_pos(&v));
 
   // Írjunk egy függvényt, ami visszaadja az adatsor átlagát és a szórását, és a program írja ki ezeket! (A)
+  printf("\n********************************************************************************\n");
   printf("Atlag: %+3.4e\n", v.atlag(&v));
   printf("Szoras: %+3.4lf\n", v.szoras(&v));
 
@@ -74,6 +77,7 @@ int main(int argc, char *argv[])
   // hogy a parancssori paraméterként megadott keresett szám szerepel-e a vektor elemei között,
   // és ha igen, hányadik indexnél!
   // Írja ki azt is, hogy ehhez hány összehasonlításra volt szükség! (A)
+  printf("\n********************************************************************************\n");
   t = clock();
   size_t keresett_index = v.keres(&v, toFind);
   t = clock() - t;
@@ -92,6 +96,7 @@ int main(int argc, char *argv[])
   // Rendezze növekvő sorrendbe a beolvasott vektor elemeit a buborékos rendezés segítségével,
   // és írja ki az elvégzett összehasonlítások számát!
   // Ha legfeljebb 20 eleme van a vektornak, akkor írja ki a sorrendezett vektort is! (T)
+  printf("\n********************************************************************************\n");
   t = clock();
   v.osszehas_szam = 0;
   v.rendez(&v);
@@ -103,6 +108,7 @@ int main(int argc, char *argv[])
   // Keresse meg a program ebben a vektorban a parancssori bemenetként megadott számot és írja ki az indexét,
   // valamint az összehasonlítások számát!
   // Találjunk olyan algoritmust, hogy minél kevesebb összehasonlításra legyen szükség! (T)
+  printf("\n********************************************************************************\n");
   t = clock();
   keresett_index = v.keres(&v, toFind);
   t = clock() - t;
@@ -123,6 +129,7 @@ int main(int argc, char *argv[])
   // Írja ki az elvégzett összehasonlítások számát!
   // Ha legfeljebb 20 eleme van a vektornak, akkor írja ki a sorrendezett vektort is!
   // Hasonlítsuk össze a saját algoritmus gyorsaságát az stdlib qsort függvénynével!
+  printf("\n********************************************************************************\n");
 
   t = clock();
   printf("Rendezes STD QSort ...\n");
@@ -133,6 +140,7 @@ int main(int argc, char *argv[])
   t = clock() - t;
   printf("%lf masodpercet vett igenybe.\n", ((double)t) / CLOCKS_PER_SEC);
 
+  printf("\n********************************************************************************\n");
   t = clock();
   v.osszehas_szam = 0;
   printf("Rendezes sajat QSort ...\n");
@@ -140,7 +148,7 @@ int main(int argc, char *argv[])
   printf("%ld darab osszehasonlitas tortent.\n", v.osszehas_szam);
   t = clock() - t;
   printf("%lf masodpercet vett igenybe.\n", ((double)t) / CLOCKS_PER_SEC);
-
+  printf("\n********************************************************************************\n");
 
   // Befejezes.
   v.felszabadit(&v);
