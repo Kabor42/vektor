@@ -59,5 +59,6 @@ struct sVector {
 };
 
 void vector_init(vektor *);
+void vector_copy(vektor *, vektor *);
 
 #endif
